@@ -7,7 +7,6 @@ import sys
 
 sentences = list(ja.convert_to_ja_sentences_from_files(sys.argv[1:]))
 
-cnt = 0
 h = {}
 tagged_docs = []
 for i, s in enumerate(sentences):
@@ -23,11 +22,8 @@ vocab = model.wv.vocab
 while True:
   text = input('>> ')
 
-  i = int(text)
-  print(to_str(h[i]))
-  print("**")
-  for pair in model.docvecs.most_similar(i):
+  v = model.infer_vector(ja.convert_to_ja_sentences(text)[0])
+  for pair in model.docvecs.most_similar(positive=[v]):
     j = pair[0]
     distance = pair[1]
     print(distance, to_str(h[j]))
-

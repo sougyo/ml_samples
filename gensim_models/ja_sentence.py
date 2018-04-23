@@ -10,11 +10,12 @@ def convert_to_ja_sentences(text):
   for word in re.split(r'\s+', mecab.parse(text)):
     if not word:
       continue
-    line.append(word)
-    if re.search(r'。|\.|．', word):
+    if re.search(r'。|\.|．|「|」', word):
       if line:
         sentences.append(line)
       line = []
+    else:
+      line.append(word)
   if line:
     sentences.append(line)
   return sentences
